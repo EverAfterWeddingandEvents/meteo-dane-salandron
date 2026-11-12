@@ -89,6 +89,13 @@
   @keyframes flip { from { opacity: .15; translate: 0 -32%; } }
   @keyframes rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
 
+  /* Floating stars: a fixed layer that sits behind the text and drifts down the screen */
+  .floaters { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+  .floaters i { position: absolute; top: -40px; display: block; animation: fall linear infinite; will-change: transform; }
+  .floaters svg { width: 100%; height: 100%; animation: waft ease-in-out infinite alternate; }
+  @keyframes fall { to { transform: translateY(calc(100vh + 80px)); } }
+  @keyframes waft { from { transform: translateX(-20px) rotate(-28deg); } to { transform: translateX(20px) rotate(28deg); } }
+
   /* ── Type ─────────────────────────────────────────────── */
   .eyebrow {
     font-family: var(--display); font-weight: 600; color: var(--navy);
@@ -1012,6 +1019,19 @@
      very old browsers: everything is simply visible. */
   function animate() {
   if (still || !('IntersectionObserver' in window)) return;
+
+  /* Floating stars drifting down the page */
+  var sky = document.createElement('div'), fr = rng(2026), stars = '';
+  sky.className = 'floaters';
+  sky.setAttribute('aria-hidden', 'true');
+  for (var f = 0, total = window.innerWidth < 720 ? 14 : 24; f < total; f++) {
+    var size = (10 + fr() * 14).toFixed(0), dur = 16 + fr() * 16;
+    stars += '<i style="left:' + (fr() * 100).toFixed(1) + '%;width:' + size + 'px;height:' + size + 'px;opacity:' + (0.45 + fr() * 0.45).toFixed(2) +
+      ';animation-duration:' + dur.toFixed(1) + 's;animation-delay:-' + (fr() * dur).toFixed(1) + 's">' +
+      '<svg viewBox="0 0 24 24" style="color:' + palette[Math.floor(fr() * palette.length)] + ';animation-duration:' + (3 + fr() * 4).toFixed(1) + 's"><use href="#star"/></svg></i>';
+  }
+  sky.innerHTML = stars;
+  document.querySelector('main').prepend(sky);
 
   /* Name: letters fall into place one by one */
   var i = 0;
