@@ -214,6 +214,9 @@
   .count span { font-family: var(--display); font-weight: 700; font-size: clamp(.62rem, 2.6vw, .8rem); letter-spacing: .2em; text-transform: uppercase; color: var(--blue); }
   .count-done { margin: 1.4rem 0 1.8rem; }
   .actions { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center; }
+  .cal-label { font-family: var(--display); font-weight: 700; color: var(--blue); font-size: .8rem; letter-spacing: .26em; margin: 0 -.26em .8rem 0; text-transform: uppercase; }
+  .cal-hint { margin-top: .9rem; font-size: .95rem; font-style: italic; color: var(--navy); text-wrap: balance; }
+  .cal-hint[hidden] { display: none; }
 
   /* ── Details ──────────────────────────────────────────── */
   .details { margin: 2.2rem 0 0; padding: 0; text-align: left; }
@@ -708,13 +711,12 @@
         <div><b data-u="s">--</b><span>Seconds</span></div>
       </div>
       <p class="lede count-done" id="count-done" hidden></p>
-      <div class="actions">
-        <a class="btn" href="mateo-dane-baptism.ics" download>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.500" y="5" width="17" height="15.500" rx="2.500"/><path d="M3.500 10h17M8 3v4M16 3v4"/></svg>
-          Add to calendar
-        </a>
-        <a class="btn ghost" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Holy+Baptism+of+Mateo+Dane+Salandron&dates=20261219T030000Z/20261219T070000Z&ctz=Asia/Manila&location=Our+Lady+of+the+Sacred+Heart+Parish,+Marigondon,+Lapu-Lapu+City,+Cebu&details=Ceremony:+11:00+AM+at+Our+Lady+of+the+Sacred+Heart+Parish.%0AReception:+12:00+%E2%80%93+3:00+PM+at+Kumedor+Restaurant.%0AAttire:+White.%0A%0Ahttps://mateo-dane-salandron.everafterweddingsandevent.com">Google Calendar</a>
+      <p class="cal-label">Add to your calendar</p>
+      <div class="actions" id="cal">
+        <a class="btn" id="cal-google" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Holy+Baptism+of+Mateo+Dane+Salandron&dates=20261219T030000Z/20261219T070000Z&ctz=Asia/Manila&location=Our+Lady+of+the+Sacred+Heart+Parish,+Marigondon,+Lapu-Lapu+City,+Cebu&details=Ceremony:+11:00+AM+at+Our+Lady+of+the+Sacred+Heart+Parish.%0AReception:+12:00+%E2%80%93+3:00+PM+at+Kumedor+Restaurant.%0AAttire:+White.%0A%0Ahttps://mateo-dane-salandron.everafterweddingsandevent.com">Google Calendar</a>
+        <a class="btn ghost" id="cal-apple" href="mateo-dane-baptism.ics">Apple Calendar</a>
       </div>
+      <p class="cal-hint" id="cal-hint" hidden>If Apple Calendar doesn’t open here, open this page in Safari first, then tap it again.</p>
     </div>
   </div>
 </section>
@@ -990,6 +992,20 @@
   }
   if (tick()) { var timer = setInterval(function () { if (!tick()) clearInterval(timer); }, 1000); }
 
+  /* Calendar buttons: on Apple devices lead with Apple Calendar (the .ics opens
+     the system "Add to Calendar" sheet); everywhere else lead with Google.
+     In-app browsers on iPhone (Messenger, Facebook, Instagram) can't hand the
+     file to Calendar, so those guests get a one-line hint. */
+  (function () {
+    var ua = navigator.userAgent || '', apple = document.getElementById('cal-apple'), google = document.getElementById('cal-google');
+    var isIOS = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+    if (isIOS || /Macintosh/.test(ua)) {
+      apple.className = 'btn'; google.className = 'btn ghost';
+      apple.parentNode.insertBefore(apple, google);
+    }
+    if (isIOS && /FBAN|FBAV|FB_IAB|Messenger|Instagram|Line\//.test(ua)) document.getElementById('cal-hint').hidden = false;
+  })();
+
   /* Map tabs */
   var map = document.getElementById('map'), tabs = document.querySelectorAll('.tabs button');
   tabs.forEach(function (btn) {
@@ -1091,7 +1107,7 @@
   var plan = [
     ['.when', 'zoom'], ['.hero .ribbon', 'draw'], ['.venue', 'up'], ['.hero .inner > .rule:last-of-type', 'draw'],
     ['.hero-foot .church', 'left'], ['.scroll-hint', 'up'], ['.hero-foot .bear', 'right'],
-    ['.count-title', 'blur'], ['.count > div', 'pop'], ['.count-done', 'up'], ['#countdown .actions', 'up'],
+    ['.count-title', 'blur'], ['.count > div', 'pop'], ['.count-done', 'up'], ['.cal-label', 'up'], ['#countdown .actions', 'up'],
     ['.title', 'blur'], ['#note .rule', 'draw'], ['#note .lede', 'up'], ['.details > div', 'row'], ['.bear-duo svg', 'bounce'],
     ['.loc-name', 'blur'], ['.loc-script', 'up'], ['#location .ribbon', 'draw'], ['.tabs', 'up'], ['.map', 'zoom'],
     ['.place:not(.warm)', 'left'], ['.place.warm', 'right'], ['.route', 'up'],

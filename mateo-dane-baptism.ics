@@ -4,27 +4,16 @@ PRODID:-//Mateo Dane Holy Baptism//EN
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
 BEGIN:VEVENT
-UID:ceremony-20261219@mateo-dane-salandron.everafterweddingsandevent.com
-DTSTAMP:20261112T000000Z
+UID:baptism-20261219@mateo-dane-salandron.everafterweddingsandevent.com
+DTSTAMP:20261113T000000Z
 DTSTART:20261219T030000Z
-DTEND:20261219T040000Z
-SUMMARY:Holy Baptism of Mateo Dane Salandron
-LOCATION:Our Lady of the Sacred Heart Parish\, Marigondon\, Lapu-Lapu 
- City\, Cebu
-DESCRIPTION:Ceremony at 11:00 AM. Reception to follow at Kumedor Restauran
- t\, 12:00 - 3:00 PM. Attire: White.
-URL:https://mateo-dane-salandron.everafterweddingsandevent.com
-END:VEVENT
-BEGIN:VEVENT
-UID:reception-20261219@mateo-dane-salandron.everafterweddingsandevent.com
-DTSTAMP:20261112T000000Z
-DTSTART:20261219T040000Z
 DTEND:20261219T070000Z
-SUMMARY:Reception - Mateo Dane's Baptism
-LOCATION:Kumedor Restaurant\, Red Coco Town\, Hadsan Road\, Agus\, Lapu-Lap
- u City\, Cebu
-DESCRIPTION:Reception following the Holy Baptism of Mateo Dane Salandron. 
- Attire: White.
+SUMMARY:Holy Baptism of Mateo Dane Salandron
+LOCATION:Our Lady of the Sacred Heart Parish\, Marigondon\, Lapu-Lapu City\
+ , Cebu
+DESCRIPTION:Ceremony: 11:00 AM at Our Lady of the Sacred Heart Parish.\nRec
+ eption: 12:00 - 3:00 PM at Kumedor Restaurant.\nAttire: White.\n\nhttps://
+ mateo-dane-salandron.everafterweddingsandevent.com
 URL:https://mateo-dane-salandron.everafterweddingsandevent.com
 END:VEVENT
 END:VCALENDAR
