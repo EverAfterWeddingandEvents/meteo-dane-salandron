@@ -5,4 +5,4 @@
 # Full-size original photo, kept locally as the master copy. The site only
 # loads the cropped assets/mateo.jpg, so the original stays out of the
 # published repo.
-assets/mateo-original.jpg
+assets/mateo-original*.jpg
